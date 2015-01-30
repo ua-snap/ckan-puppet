@@ -1,28 +1,32 @@
-# == Class ckan::postinstall
-#
-# Manages services for ckan
-#
+# manages services for ckan
 # details: http://docs.ckan.org/en/ckan-2.0/install-from-package.html
 class ckan::service {
 
-  service { 'jetty':
+  service { 'httpd':
     ensure     => running,
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
   }
-  service { 'apache2':
-    ensure     => running,
-    enable     => true,
-    hasstatus  => true,
-    hasrestart => true,
-    require    => Service['jetty'],
-  }
-  service { 'nginx':
-    ensure     => running,
-    enable     => true,
-    hasstatus  => true,
-    hasrestart => true,
-    require    => Service['apache2'],
-  }
+
+  service {'tomcat6':
+  ensure => running,
+    enable => true,
+    hasstatus => true,
+    hasrestart => true
+}
+
+  service {'supervisord':
+  ensure => running,
+    enable => true,
+    hasstatus => true,
+    hasrestart => true
+}
+  service {'redis':
+  ensure => running,
+    enable => true,
+    hasstatus => true,
+    hasrestart => true
+}
+
 }
